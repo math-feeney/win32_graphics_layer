@@ -5,7 +5,7 @@ REM -MT(as opposed to -MD) is the specifier to tell the compiler to link statica
 
 REM === configuration ===
 set COMP_FLAGS=/nologo /W4 /Od /Zi /MT
-set LINK_FLAGS=/nologo /OPT:REF user32.lib gdi32.lib Winmm.lib
+set LINK_FLAGS=/nologo /DEBUG /PDB:build\app.pdb /OPT:REF user32.lib gdi32.lib Winmm.lib
 
 REM ensure build directory exists
 IF NOT EXIST .\build mkdir .\build
