@@ -3,6 +3,7 @@
 #endif
 
 #include <Windows.h>
+#include <WinDef.h>
 #include "header.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -50,12 +51,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
     // Run the message loop
 
     MSG msg ={0};
-    while(GetMessage(&msg, NULL, 0, 0) > 0)
+    while(GetMessage(&msg, NULL, 0, 0))
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
-    } // LEFT OFF HERE /////////////////////////////////////////////
+    } 
 
     return 0;
 }
 
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+    switch(uMsg)
+    {
+        case WM_SIZE:
+        {
+            // TODO: maybe implement LOWORD and HIWORD myself
+            int width = LOWORD(lParam);
+            int heigth = HIWORD(lParam);
+
+            // Respond to the message:
+            // TODO: write this function 
+            //OnSize(hwnd, (UINT)wParam, width, heigth);
+        } break;
+
+        // LEFT OFF HERE ////////////////////////////
+        // First question: windows docs say to return DefWindowProc at the end instead of using default
+        // figure out why? and if I should do that
+        default:
+        {
+            DefWindowProc(hwnd, uMsg, wParam, lParam);
+        }
+
+    }
+
+}
