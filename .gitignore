@@ -2,3 +2,4 @@ misc/
 build/
 bin/
 *.pdb
+.vs/
