@@ -99,6 +99,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             return Result;
         } break; // NOTE: this break statement should probably never be reached
 
+        case WM_DESTROY:
+        {
+            PostQuitMessage(0);
+            return Result;
+        }
+
         default:
         {
             Result = DefWindowProc(hwnd, uMsg, wParam, lParam);
