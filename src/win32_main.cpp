@@ -62,6 +62,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    // Initialize a return value
+    LRESULT Result = 0;
+
     switch(uMsg)
     {
         case WM_SIZE:
@@ -75,14 +78,33 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
             //OnSize(hwnd, (UINT)wParam, width, heigth);
         } break;
 
-        // LEFT OFF HERE ////////////////////////////
-        // First question: windows docs say to return DefWindowProc at the end instead of using default
-        // figure out why? and if I should do that
+        case WM_PAINT:
+        {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+
+            // All painting occurs here, between BeginPaint and EndPaint
+
+            FillRect(hdc, &ps.rcPaint, (HBRUSH) (COLOR_WINDOW + 1));
+
+            EndPaint(hwnd, &ps);
+        } break;
+
+        case WM_CLOSE:
+        {
+            if(MessageBox(hwnd, L"Really quit?", L"APPLICATION TEXT", MB_OKCANCEL) == IDOK)
+            {
+                DestroyWindow(hwnd);
+            }
+            return Result;
+        } break; // NOTE: this break statement should probably never be reached
+
         default:
         {
-            DefWindowProc(hwnd, uMsg, wParam, lParam);
+            Result = DefWindowProc(hwnd, uMsg, wParam, lParam);
         }
 
     }
 
+    return Result;
 }
